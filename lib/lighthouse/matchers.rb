@@ -24,7 +24,7 @@ module Lighthouse
       end
 
       def runner
-        @runner ||= Kernel.method(:system)
+        @runner ||= proc { |cmd| `#{cmd}` }
       end
 
       private
