@@ -1,6 +1,6 @@
-# Lighthouse Audit Matchers
+# Lighthouse Matchers
 
-Lighthouse Audit Matchers provides single-line RSpec matchers for 
+Lighthouse Matchers provides single-line RSpec matchers for 
 expectations against the result of [Lighthouse](https://developers.google.com/web/tools/lighthouse/) 
 audit checks.
 
