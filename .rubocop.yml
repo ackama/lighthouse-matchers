@@ -1,0 +1,6 @@
+Metrics/BlockLength:
+  Exclude: 
+    - 'spec/**/*_spec.rb'
+    - 'lighthouse-matchers.gemspec'
+Metrics/LineLength:
+  Max: 100
