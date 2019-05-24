@@ -20,7 +20,7 @@ module Lighthouse
       end
 
       def lighthouse_cli
-        @lighthouse_cli ||= lighthouse_cli
+        @lighthouse_cli ||= guess_lighthouse_cli
       end
 
       def runner
