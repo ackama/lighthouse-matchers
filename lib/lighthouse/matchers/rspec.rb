@@ -11,8 +11,7 @@ RSpec::Matchers.define :pass_lighthouse_audit do |audit, score: nil|
     runner = Lighthouse::Matchers.runner
 
     url = target.respond_to?(:current_url) ? target.current_url : target
-    opts = "'#{url}' --quiet --output=json"
-    opts << " --port '#{port}'" if port
+    opts = "'#{url}' --quiet --output=json #{"--port=#{port}" if port}".strip
     cmd = Lighthouse::Matchers.lighthouse_cli
     output = runner.call("#{cmd} #{opts}")
     results = JSON.parse(output)

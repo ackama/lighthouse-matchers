@@ -20,11 +20,11 @@ module Lighthouse
       end
 
       def lighthouse_cli
-        @lighthouse_cli ||= lighthouse_cli
+        @lighthouse_cli ||= guess_lighthouse_cli
       end
 
       def runner
-        @runner ||= Kernel.method(:system)
+        @runner ||= proc { |cmd| `#{cmd}` }
       end
 
       private
