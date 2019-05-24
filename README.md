@@ -1,4 +1,4 @@
-# Lighthouse Matchers
+# Lighthouse Matchers [![Maintainability](https://api.codeclimate.com/v1/badges/2f1df198307f6a0489fc/maintainability)](https://codeclimate.com/github/ackama/lighthouse-matchers/maintainability) [![Build Status](https://travis-ci.org/ackama/lighthouse-matchers.svg?branch=master)](https://travis-ci.org/ackama/lighthouse-matchers)
 
 Lighthouse Matchers provides single-line RSpec matchers for 
 expectations against the result of [Lighthouse](https://developers.google.com/web/tools/lighthouse/) 
