@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 class AuditService
   def initialize(url, audit, score)
     @url = url

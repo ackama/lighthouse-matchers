@@ -2,8 +2,8 @@
 
 require 'rspec/expectations'
 require 'lighthouse/matchers'
-require 'lighthouse/message_service'
 require 'lighthouse/audit_service'
+require 'lighthouse/message_service'
 require 'json'
 
 RSpec::Matchers.define :pass_lighthouse_audit do |audit, score: nil|
