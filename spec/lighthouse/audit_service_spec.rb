@@ -23,10 +23,17 @@ RSpec.describe AuditService do
       end
     end
 
-    context 'when the score does not match' do
+    context 'when the score is below the threshold' do
       it 'returns false' do
         stub_command(response_fixture(audit, score - 1))
         expect(subject.passing_score?).to eq false
+      end
+    end
+
+    context 'when the score is above the threshold' do
+      it 'returns true' do
+        stub_command(response_fixture(audit, score + 1))
+        expect(subject.passing_score?).to eq true
       end
     end
   end
