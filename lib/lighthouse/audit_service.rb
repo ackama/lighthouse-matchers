@@ -2,6 +2,7 @@
 
 require 'json'
 
+# Compares a url's actual score to the expected score.
 class AuditService
   def initialize(url, audit, score)
     @url = url

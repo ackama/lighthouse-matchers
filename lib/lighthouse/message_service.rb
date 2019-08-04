@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Returns strings.
 class MessageService
   def initialize(url, audit, score)
     @url = url
