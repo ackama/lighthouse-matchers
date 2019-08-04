@@ -28,7 +28,7 @@ RSpec.describe MessageService do
       end
     end
 
-    context 'if nothing is passed in' do
+    context 'when all arguments are nil' do
       let(:url)   { nil }
       let(:audit) { nil }
       let(:score) { nil }

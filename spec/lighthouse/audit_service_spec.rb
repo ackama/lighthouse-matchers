@@ -4,9 +4,9 @@ require 'lighthouse/audit_service'
 
 RSpec.describe AuditService do
   let(:runner) { double }
-  let(:url)   { 'example.com' }
-  let(:audit) { :performance }
-  let(:score) { 75 }
+  let(:url)    { 'example.com' }
+  let(:audit)  { :performance }
+  let(:score)  { 75 }
 
   subject { described_class.new(url, audit, score) }
 
