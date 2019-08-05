@@ -14,7 +14,7 @@ class AuditService
   end
 
   def passing_score?
-    actual_score >= @score
+    measured_score >= @score
   end
 
   private
@@ -31,7 +31,7 @@ class AuditService
     JSON.parse(output)
   end
 
-  def actual_score
+  def measured_score
     results.dig('categories', @audit.to_s, 'score') * 100
   end
 end
