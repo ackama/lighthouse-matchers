@@ -13,3 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.1] - 2019-05-24
 ### Changed
 - Apply bug fixes based on integration with a Ruby on Rails project
+
+## [1.0.2] - 2019-08-16
+### Changed
+- Refactored auditing into a service object (@CaraHill)
+-
+
