@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lighthouse-matchers (1.0.1)
+    lighthouse-matchers (1.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -48,4 +48,4 @@ DEPENDENCIES
   rubocop
 
 BUNDLED WITH
-   2.0.1
+   2.0.2
