@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'lighthouse/matchers/rspec'
+require 'lighthouse/audit_service'
 
 RSpec.describe 'pass_lighthouse_audit matcher' do
   let(:runner) { double }
@@ -14,7 +15,6 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
   context 'with single audit and default score' do
     let(:audit) { :performance }
-    subject { example_url }
 
     it 'executes the expected command' do
       expect(runner).to receive(:call)
@@ -39,6 +39,13 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     let(:audit) { :pwa }
     let(:score) { 50 }
 
+    it 'delegates to the audit service' do
+      stub_command(expected_command, response_fixture(audit, score))
+      allow(AuditService).to receive_message_chain(:new, :passing_score?).and_return(true)
+      expect(AuditService).to receive_message_chain(:new, :passing_score?)
+      expect(example_url).to pass_lighthouse_audit(audit, score: score)
+    end
+
     it 'fails with a score below threshold' do
       stub_command(expected_command, response_fixture(audit, score - 1))
       expect(example_url).not_to pass_lighthouse_audit(audit, score: score)
@@ -52,6 +59,16 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     it 'passes with a score equal to or greater than threshold' do
       stub_command(expected_command, response_fixture(audit, score + 1))
       expect(example_url).to pass_lighthouse_audit(audit, score: score)
+    end
+
+    context 'when it fails' do
+      it 'raises the correct error' do
+        stub_command(expected_command, response_fixture(audit, score))
+        expect do
+          expect(example_url).to pass_lighthouse_audit(audit)
+        end.to raise_error("expected #{example_url} to pass Lighthouse #{audit} audit\n"\
+          "with a minimum score of 100\n")
+      end
     end
   end
 
