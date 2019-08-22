@@ -26,7 +26,7 @@ You also need to have the `lighthouse` CLI tool available. The matchers will aut
 if you have added it to your `$PATH`, or if you have installed the tool using: 
 
 * `npm install --save-dev lighthouse` 
-* `yarn add --dev ligththouse`
+* `yarn add --dev lighthouse`
 
 If you have the `lighthouse` CLI tool installed, but available elsewhere on your system, you can set the location manually.
 See [Configuration](#configuration) for further instructions.
