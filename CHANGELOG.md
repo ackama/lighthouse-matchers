@@ -18,4 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Refactored auditing into a service object (@CaraHill)
 -
+## [1.0.3] - 2019-08-27
+### Added
+
+- **chrome_flags** option to allow the Chrome launch behaviour of the `lighthouse` command. (#8)
+
 
