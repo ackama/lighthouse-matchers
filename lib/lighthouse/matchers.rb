@@ -2,17 +2,18 @@
 
 require 'lighthouse/matchers/version'
 
+##
+# Defines configuration and behaviours that are shared across the entire
+# Lighthouse::Matchers namespace
 module Lighthouse
-  ##
-  # Defines configuration and behaviours that are shared across the entire
-  # Lighthouse::Matchers namespace
-  module Matchers
+  module Matchers # rubocop:disable Style/Documentation
     class Error < StandardError; end
     class << self
       attr_writer :minimum_score,
                   :remote_debugging_port,
                   :lighthouse_cli,
-                  :runner
+                  :runner,
+                  :chrome_flags
       attr_reader :remote_debugging_port
 
       def minimum_score
@@ -25,6 +26,13 @@ module Lighthouse
 
       def runner
         @runner ||= proc { |cmd| `#{cmd}` }
+      end
+
+      def chrome_flags
+        return unless @chrome_flags
+        return @chrome_flags unless @chrome_flags.is_a?(Array)
+
+        @chrome_flags.map { |f| "--#{f}" }.join(' ')
       end
 
       private
