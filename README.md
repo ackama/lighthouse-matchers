@@ -102,6 +102,7 @@ All configuration keys are accessible against the `Lighthouse::Matchers` object.
   for the CLI. This setting can be used if the Lighthouse tool is installed in a non-standard location.
 * **`minimum_score`:** The default minimum score that audits must meet for the matcher to pass. 
   The default value of this configuration setting is '100' - e.g. audits must fully comply to pass.
+* **`chrome_flags`:** Any additional flags that should be passed to Chrome when Lighthouse launches a browser instance. As an example, running Lighthouse in Docker requires the normal headless Chrome flags (`--headless`, `--no-sandbox`) for Chrome to successfully start. Chrome flags can either be specified as an array (`["headless", "no-sandbox"]`) or as a string (`--headless --no-sandbox`).
 
 ## Compatibility
 

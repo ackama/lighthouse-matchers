@@ -83,6 +83,36 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     end
   end
 
+  context 'with Chrome flags specified' do
+    context 'as a string' do
+      before { Lighthouse::Matchers.chrome_flags = '--headless --no-sandbox' }
+
+      it 'executes the expected command' do
+        command = expected_command + " --chrome-flags='--headless --no-sandbox'"
+
+        expect(runner).to receive(:call)
+          .with(command)
+          .and_return(response_fixture(:performance))
+
+        expect(example_url).to pass_lighthouse_audit(:performance)
+      end
+    end
+
+    context 'as an array' do
+      before { Lighthouse::Matchers.chrome_flags = %w[headless no-sandbox] }
+
+      it 'executes the expected command' do
+        command = expected_command + " --chrome-flags='--headless --no-sandbox'"
+
+        expect(runner).to receive(:call)
+          .with(command)
+          .and_return(response_fixture(:performance))
+
+        expect(example_url).to pass_lighthouse_audit(:performance)
+      end
+    end
+  end
+
   private
 
   def stub_command(cmd, result)

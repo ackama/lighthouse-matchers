@@ -1,6 +1,7 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 require 'json'
+require 'stringio'
 
 # Compares a url's actual score to the expected score.
 class AuditService
@@ -11,6 +12,7 @@ class AuditService
     @port = Lighthouse::Matchers.remote_debugging_port
     @runner = Lighthouse::Matchers.runner
     @cmd = Lighthouse::Matchers.lighthouse_cli
+    @chrome_flags = Lighthouse::Matchers.chrome_flags
   end
 
   def passing_score?
@@ -20,7 +22,12 @@ class AuditService
   private
 
   def opts
-    "'#{@url}' --quiet --output=json #{"--port=#{@port}" if @port}".strip
+    "'#{@url}'".tap do |builder|
+      builder << ' --quiet'
+      builder << ' --output=json'
+      builder << " --port=#{@port}" if @port
+      builder << " --chrome-flags='#{@chrome_flags}'" if @chrome_flags
+    end.strip
   end
 
   def output
