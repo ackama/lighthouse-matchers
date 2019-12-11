@@ -2,4 +2,3 @@
 
 bundle exec rake spec
 bundle exec rubocop
-bundle exec rake spec:integration
