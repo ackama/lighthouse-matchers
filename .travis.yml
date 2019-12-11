@@ -6,9 +6,8 @@ rvm:
 cache: bundler
 before_install:
   - . $HOME/.nvm/nvm.sh
-  - nvm install 'lts/dubnium'
-  - nvm use 'lts/dubnium'
-before_install:
+  - nvm install stable
+  - nvm use stable
   - gem update --system --no-document
   - gem install bundler --no-document
 install: "bin/setup"
