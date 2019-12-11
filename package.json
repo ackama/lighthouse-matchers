@@ -1,0 +1,32 @@
+{
+  "name": "lighthouse-matchers-rubygem",
+  "version": "1.0.0",
+  "description": "Implements RSpec matchers for Google Chrome Lighthouse audits.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "bin/ci-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ackama/lighthouse-matchers.git"
+  },
+  "keywords": [
+    "ruby",
+    "gem",
+    "lighthouse",
+    "google-chrome",
+    "rspec"
+  ],
+  "author": "Ackama Developers <developers@ackama.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ackama/lighthouse-matchers/issues"
+  },
+  "homepage": "https://github.com/ackama/lighthouse-matchers#readme",
+  "dependencies": {
+    "lighthouse": "^5.6.0"
+  }
+}
