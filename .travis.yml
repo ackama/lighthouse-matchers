@@ -1,4 +1,6 @@
 language: ruby
+addons:
+  chrome: stable
 rvm:
   - 2.4.6
   - 2.5.5
