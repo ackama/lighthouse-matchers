@@ -6,8 +6,8 @@ rvm:
 cache: bundler
 before_install:
   - . $HOME/.nvm/nvm.sh
-  - nvm install stable
-  - nvm use stable
+  - nvm install 'lts/*'
+  - nvm use 'lts/*'
 before_install:
   - gem update --system --no-document
   - gem install bundler --no-document
