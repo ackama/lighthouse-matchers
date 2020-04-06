@@ -120,7 +120,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
       before { Lighthouse::Matchers.lighthouse_options = '--throttling-method=provided' }
 
       it 'executes the expected command' do
-        command = expected_command + " --throttling-method=provided"
+        command = expected_command + ' --throttling-method=provided'
 
         expect(runner).to receive(:call)
           .with(command)
@@ -134,7 +134,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
       before { Lighthouse::Matchers.lighthouse_options = %w[emulated-form-factor=desktop] }
 
       it 'executes the expected command' do
-        command = expected_command + " --emulated-form-factor=desktop"
+        command = expected_command + ' --emulated-form-factor=desktop'
 
         expect(runner).to receive(:call)
           .with(command)
