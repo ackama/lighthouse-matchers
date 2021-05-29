@@ -70,8 +70,10 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
         stub_result(response_fixture(audit, score))
         expect do
           expect(example_url).to pass_lighthouse_audit(audit)
-        end.to raise_error("expected #{example_url} to pass Lighthouse #{audit} audit\n"\
-                           "with a minimum score of 100\n")
+        end.to raise_error <<~MESSAGE
+          expected #{example_url} to pass Lighthouse #{audit} audit
+          with a minimum score of 100, but only scored #{score}
+        MESSAGE
       end
     end
   end

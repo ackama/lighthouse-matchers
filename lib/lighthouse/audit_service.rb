@@ -19,6 +19,10 @@ class AuditService
     measured_score >= @score
   end
 
+  def measured_score
+    results.dig('categories', @audit.to_s, 'score') * 100
+  end
+
   private
 
   def opts
@@ -32,14 +36,10 @@ class AuditService
   end
 
   def output
-    @runner.call("#{@cmd} #{opts}")
+    @output ||= @runner.call("#{@cmd} #{opts}")
   end
 
   def results
     JSON.parse(output)
-  end
-
-  def measured_score
-    results.dig('categories', @audit.to_s, 'score') * 100
   end
 end
