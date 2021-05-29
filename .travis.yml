@@ -1,10 +1,15 @@
 language: ruby
+addons:
+  chrome: stable
 rvm:
   - 2.4.6
   - 2.5.5
   - 2.6.3
 cache: bundler
 before_install:
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
   - gem update --system --no-document
   - gem install bundler --no-document
 install: "bin/setup"

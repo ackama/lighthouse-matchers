@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-bundle exec rspec spec
+bundle exec rake spec
 bundle exec rubocop

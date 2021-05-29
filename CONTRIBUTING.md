@@ -93,6 +93,12 @@ To run a unit test, you might say something like:
 bundle exec rspec spec/lighthouse/matchers/rspec_spec.rb
 ```
 
+You can run all unit tests (fast) using a special rake task:
+
+```bash
+bundle exec rake spec:unit
+```
+
 ### Integration tests
 
 The integration tests exercise matchers using real Lighthouse audit results. We aim to 
@@ -103,6 +109,12 @@ To run an integration test, you might say something like:
 
 ```bash
 bundle exec rspec spec/integration/lighthouse_matchers_spec.rb
+```
+
+You can run all integration tests (slow) using a special rake task:
+
+```bash
+bundle exec rake spec:integration
 ```
 
 ### All tests
