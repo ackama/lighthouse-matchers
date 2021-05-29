@@ -13,6 +13,7 @@ module Lighthouse
                   :remote_debugging_port,
                   :lighthouse_cli,
                   :runner,
+                  :lighthouse_options,
                   :chrome_flags
       attr_reader :remote_debugging_port
 
@@ -26,6 +27,13 @@ module Lighthouse
 
       def runner
         @runner ||= proc { |cmd| `#{cmd}` }
+      end
+
+      def lighthouse_options
+        return unless @lighthouse_options
+        return @lighthouse_options unless @lighthouse_options.is_a?(Array)
+
+        @lighthouse_options.map { |f| "--#{f}" }.join(' ')
       end
 
       def chrome_flags

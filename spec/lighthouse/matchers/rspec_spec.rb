@@ -67,7 +67,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
         expect do
           expect(example_url).to pass_lighthouse_audit(audit)
         end.to raise_error("expected #{example_url} to pass Lighthouse #{audit} audit\n"\
-          "with a minimum score of 100\n")
+                           "with a minimum score of 100, current score is #{score}\n")
       end
     end
   end
@@ -103,6 +103,38 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
       it 'executes the expected command' do
         command = expected_command + " --chrome-flags='--headless --no-sandbox'"
+
+        expect(runner).to receive(:call)
+          .with(command)
+          .and_return(response_fixture(:performance))
+
+        expect(example_url).to pass_lighthouse_audit(:performance)
+      end
+    end
+  end
+
+  context 'with Lighthouse Options specified' do
+    before { Lighthouse::Matchers.chrome_flags = nil }
+
+    context 'as a string' do
+      before { Lighthouse::Matchers.lighthouse_options = '--throttling-method=provided' }
+
+      it 'executes the expected command' do
+        command = expected_command + ' --throttling-method=provided'
+
+        expect(runner).to receive(:call)
+          .with(command)
+          .and_return(response_fixture(:performance))
+
+        expect(example_url).to pass_lighthouse_audit(:performance)
+      end
+    end
+
+    context 'as an array' do
+      before { Lighthouse::Matchers.lighthouse_options = %w[emulated-form-factor=desktop] }
+
+      it 'executes the expected command' do
+        command = expected_command + ' --emulated-form-factor=desktop'
 
         expect(runner).to receive(:call)
           .with(command)
