@@ -1,4 +1,4 @@
-# Contributing 
+# Contributing
 
 Although we are always happy to make improvements, we also
 welcome changes and improvements from the community!
@@ -19,7 +19,7 @@ you think would be useful? Here's what you need to do:
    API](#documentation).
 1. [Refrain from updating the changelog.](#changelog)
 1. Push to your fork and submit a pull request.
-1. [Ensure that the test suite passes on Travis and make any necessary changes
+1. [Ensure that the test suite passes CI and make any necessary changes
    to your branch to bring it to green.](#continuous-integration)
 
 Although we maintain this gem in our free time, we try to respond to
@@ -64,7 +64,7 @@ In addition, tests are broken up into two categories:
   interested in these). These tests typically stub out actual requests to the Lighthouse CLI.
 * Integration tests — high-level tests to ensure that the gem works against the CLI tool. These tests are not updated frequently but are important to make sure that changes to the CLI interface do not cause this library to break.
 
-Our approach to testing tends to iterate over time. The best approach for writing tests is to copy an existing test in the same file as where you want to add a new test. We may suggest changes to bring the tests in line with 
+Our approach to testing tends to iterate over time. The best approach for writing tests is to copy an existing test in the same file as where you want to add a new test. We may suggest changes to bring the tests in line with
 our current approach.
 
 ## Code style
@@ -73,7 +73,7 @@ We follow a derivative of the [unofficial Ruby style guide] created by the
 Rubocop developers. You can view our Rubocop configuration [here], but here are
 some key differences:
 
-* We allow longer blocks in spec files. This is because `RSpec.describe` blocks can 
+* We allow longer blocks in spec files. This is because `RSpec.describe` blocks can
   quite easily go over the default Rubocop limit.
 * We have increased the maximum line length to 100 characters.
 
@@ -101,7 +101,7 @@ bundle exec rake spec:unit
 
 ### Integration tests
 
-The integration tests exercise matchers using real Lighthouse audit results. We aim to 
+The integration tests exercise matchers using real Lighthouse audit results. We aim to
 select reasonably complex well-known projects that are know to have good audit scores to exercise
 that our matchers correctly catch pass and fail conditions.
 
@@ -134,9 +134,9 @@ bundle exec rake
 ## Documentation
 
 As you navigate the codebase, you may notice certain classes and methods that
-are prefaced with inline documentation. 
+are prefaced with inline documentation.
 
-If your changes end up extending or updating the API, it helps greatly to update the 
+If your changes end up extending or updating the API, it helps greatly to update the
 docs at the same time for future developers and other readers of the source code.
 
 ## A word on the changelog
@@ -150,16 +150,14 @@ about this — we'll take care of it when we release a new version.
 While running `bundle exec rake` is a great way to check your work, this command
 will only run your tests against the latest supported Ruby and Rails version.
 Ultimately, though, you'll want to ensure that your changes work in all possible
-environments. We make use of [Travis][travis] to do this work for us. Travis
+environments. We make use of [Github Actions][actions] to do this work for us. This
 will kick in after you push up a branch or open a PR. It takes a few minutes to
 run a complete build, which you are free to
-[monitor as it progresses][travis-project].
+[monitor as it progresses][actions].
 
-[travis-project]: https://travis-ci.org/ackama/lighthouse-matchers
+[actions]: https://github.com/ackama/lighthouse-matchers/actions
 
 What happens if the build fails in some way? Don't fear! Click on a failed job
 and scroll through its output to determine the cause of the failure. You'll want
 to make changes to your branch and push them up until the entire build is green.
 It may take a bit of time, but overall it is worth it and it helps us immensely!
-
-[travis]: https://travis-ci.org/
