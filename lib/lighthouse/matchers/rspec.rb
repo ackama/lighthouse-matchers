@@ -5,8 +5,8 @@ require 'lighthouse/matchers'
 require 'lighthouse/audit_service'
 require 'json'
 
-RSpec::Matchers.define :pass_lighthouse_audit do |audit, score: nil|
-  score ||= Lighthouse::Matchers.minimum_score
+RSpec::Matchers.define :pass_lighthouse_audit do |audit, args = {}|
+  score ||= args.fetch(:score, Lighthouse::Matchers.minimum_score)
 
   match do |target|
     AuditService.new(url(target), audit, score).passing_score?
