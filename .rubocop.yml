@@ -1,6 +1,9 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  NewCops: enable
 Metrics/BlockLength:
-  Exclude: 
+  Exclude:
     - 'spec/**/*_spec.rb'
     - 'lighthouse-matchers.gemspec'
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100

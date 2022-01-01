@@ -88,7 +88,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
       before { Lighthouse::Matchers.chrome_flags = '--headless --no-sandbox' }
 
       it 'executes the expected command' do
-        command = expected_command + " --chrome-flags='--headless --no-sandbox'"
+        command = "#{expected_command} --chrome-flags='--headless --no-sandbox'"
 
         expect(runner).to receive(:call)
           .with(command)
@@ -102,7 +102,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
       before { Lighthouse::Matchers.chrome_flags = %w[headless no-sandbox] }
 
       it 'executes the expected command' do
-        command = expected_command + " --chrome-flags='--headless --no-sandbox'"
+        command = "#{expected_command} --chrome-flags='--headless --no-sandbox'"
 
         expect(runner).to receive(:call)
           .with(command)
