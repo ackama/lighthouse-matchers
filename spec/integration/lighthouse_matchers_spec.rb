@@ -5,6 +5,9 @@ require 'webrick'
 
 RSpec.describe 'LighthouseMatchers', type: :integration do
   before(:all) do
+    @original_chrome_flags = Lighthouse::Matchers.chrome_flags
+    Lighthouse::Matchers.chrome_flags = ENV['CI_CHROME_FLAGS']
+
     dev_null = WEBrick::Log.new('/dev/null', 7)
 
     @root = File.expand_path("#{__dir__}/../fixtures")
@@ -19,7 +22,10 @@ RSpec.describe 'LighthouseMatchers', type: :integration do
   end
 
   trap(0) { Process.kill('QUIT', @pid) }
-  after(:all) { Process.kill('QUIT', @pid) }
+  after(:all) do
+    Lighthouse::Matchers.chrome_flags = @original_chrome_flags
+    Process.kill('QUIT', @pid)
+  end
 
   subject { "http://localhost:8000/#{fixture}" }
 
