@@ -21,7 +21,6 @@ RSpec.describe 'LighthouseMatchers', type: :integration do
     end
   end
 
-  trap(0) { Process.kill('QUIT', @pid) }
   after(:all) do
     Lighthouse::Matchers.chrome_flags = @original_chrome_flags
     Process.kill('QUIT', @pid)
