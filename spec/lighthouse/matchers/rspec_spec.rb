@@ -45,13 +45,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
     it 'delegates to the audit service' do
       stub_result(response_fixture(audit, score))
-      fake_audit_service = instance_double(AuditService)
-
-      allow(AuditService).to receive(:new).and_return(fake_audit_service)
-
-      allow(fake_audit_service).to receive(:passing_score?).and_return(true)
-      allow(fake_audit_service).to receive(:measured_score).and_return(100)
-
+      allow(AuditService).to receive_message_chain(:new, :passing_score?).and_return(true)
       expect(AuditService).to receive_message_chain(:new, :passing_score?)
       expect(example_url).to pass_lighthouse_audit(audit, score: score)
     end
@@ -76,10 +70,20 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
         stub_result(response_fixture(audit, score))
         expect do
           expect(example_url).to pass_lighthouse_audit(audit)
-        end.to raise_error <<~MESSAGE
+        end.to raise_error(RSpec::Expectations::ExpectationNotMetError, <<~FAIL)
           expected #{example_url} to pass Lighthouse #{audit} audit
-          with a minimum score of 100, but only scored #{score}
-        MESSAGE
+          with a minimum score of 100, but only scored #{score}.
+
+          {
+            "categories": {
+              "pwa": {
+                "score": 0.5
+              }
+            }
+          }
+
+          To view this report, load this json into https://googlechrome.github.io/lighthouse/viewer/
+        FAIL
       end
     end
   end
