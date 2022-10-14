@@ -35,6 +35,7 @@ class AuditService
   end
 
   def results
+    puts output
     JSON.parse(output)
   end
 
