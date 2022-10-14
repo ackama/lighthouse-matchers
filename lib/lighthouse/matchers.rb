@@ -9,12 +9,8 @@ module Lighthouse
   module Matchers # rubocop:disable Style/Documentation
     class Error < StandardError; end
     class << self
-      attr_writer :minimum_score,
-                  :remote_debugging_port,
-                  :lighthouse_cli,
-                  :runner,
-                  :chrome_flags
-      attr_reader :remote_debugging_port
+      attr_writer :minimum_score, :lighthouse_cli, :runner, :chrome_flags
+      attr_accessor :remote_debugging_port
 
       def minimum_score
         @minimum_score ||= default_minimum_score
