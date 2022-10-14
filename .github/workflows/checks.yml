@@ -37,4 +37,6 @@ jobs:
       - run: npm ci
 
       - run: bundle exec rake spec
+        env:
+          CI_CHROME_FLAGS: "--headless"
       - run: bundle exec rubocop
