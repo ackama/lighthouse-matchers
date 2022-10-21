@@ -74,15 +74,10 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
           expected #{example_url} to pass Lighthouse #{audit} audit
           with a minimum score of 100, but only scored #{score}.
 
-          {
-            "categories": {
-              "pwa": {
-                "score": 0.5
-              }
-            }
-          }
+          Full report:
+          #{Lighthouse::Matchers.results_directory}/f60a563794dfeedda6feeab0ec4a011c6bd74ff9.json
 
-          To view this report, load this json into https://googlechrome.github.io/lighthouse/viewer/
+          To view this report, load this file into https://googlechrome.github.io/lighthouse/viewer/
         FAIL
       end
     end

@@ -4,6 +4,8 @@ require 'rspec/expectations'
 require 'lighthouse/matchers'
 require 'lighthouse/audit_service'
 require 'json'
+require 'digest'
+require 'fileutils'
 
 RSpec::Matchers.define :pass_lighthouse_audit do |audit, args = {}|
   score ||= args.fetch(:score, Lighthouse::Matchers.minimum_score)
@@ -18,13 +20,23 @@ RSpec::Matchers.define :pass_lighthouse_audit do |audit, args = {}|
       expected #{url(target)} to pass Lighthouse #{audit} audit
       with a minimum score of #{score}, but only scored #{@audit_service.measured_score}.
 
-      #{JSON.pretty_generate(@audit_service.results)}
+      Full report:
+      #{write_file(JSON.pretty_generate(@audit_service.results))}
 
-      To view this report, load this json into https://googlechrome.github.io/lighthouse/viewer/
+      To view this report, load this file into https://googlechrome.github.io/lighthouse/viewer/
     FAIL
   end
 
   private
+
+  def write_file(body)
+    path = File.join(Lighthouse::Matchers.results_directory, "#{Digest::SHA1.hexdigest(body)}.json")
+
+    FileUtils.mkdir_p(Lighthouse::Matchers.results_directory)
+    File.write(path, body)
+
+    path
+  end
 
   def url(target)
     target.respond_to?(:current_url) ? target.current_url : target
