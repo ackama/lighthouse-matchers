@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 require 'webrick'
+require 'lighthouse/matchers/rspec'
 
 RSpec.describe 'LighthouseMatchers', type: :integration do
   before(:all) do
