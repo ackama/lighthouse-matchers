@@ -43,3 +43,8 @@ jobs:
     - run: npm test
       env:
         CI_CHROME_FLAGS: "--headless"
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: lighthouse_results
+        path: spec/lighthouse_results/*
