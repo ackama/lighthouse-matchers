@@ -6,7 +6,10 @@ require 'lighthouse/audit_service'
 RSpec.describe 'pass_lighthouse_audit matcher' do
   let(:runner) { double }
   let(:example_url) { 'https://example.com' }
-  let(:expected_command) { "lighthouse-stub '#{example_url}' --quiet --output=json --only-categories=#{audit}" }
+  let(:expected_command) do
+    "lighthouse-stub '#{example_url}' --quiet --output=json --only-categories=#{audit}"
+  end
+
   let(:audit) { :performance }
 
   before do
