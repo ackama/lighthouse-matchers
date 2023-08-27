@@ -68,17 +68,25 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     context 'when it fails' do
       it 'raises the correct error' do
         stub_result(response_fixture(audit, score))
-        expect do
-          expect(example_url).to pass_lighthouse_audit(audit)
-        end.to raise_error(RSpec::Expectations::ExpectationNotMetError, <<~FAIL)
-          expected #{example_url} to pass Lighthouse #{audit} audit
-          with a minimum score of 100, but only scored #{score}.
 
-          Full report:
-          #{Lighthouse::Matchers.results_directory}/f60a563794dfeedda6feeab0ec4a011c6bd74ff9.json
+        # because of the size of the message we assert like this to avoid the string
+        # being unhelpfully truncated in the middle by RSpec if the exception fails
+        expect { expect(example_url).to pass_lighthouse_audit(audit) }.to raise_error do |error|
+          expect(error).to be_kind_of(RSpec::Expectations::ExpectationNotMetError)
+          expect(error).to have_attributes(
+            {
+              'message' => <<~FAIL
+                expected #{example_url} to pass Lighthouse #{audit} audit
+                with a minimum score of 100, but only scored #{score}.
 
-          To view this report, load this file into https://googlechrome.github.io/lighthouse/viewer/
-        FAIL
+                Full report:
+                #{Lighthouse::Matchers.results_directory}/f60a563794dfeedda6feeab0ec4a011c6bd74ff9.json
+
+                To view this report, load this file into https://googlechrome.github.io/lighthouse/viewer/
+              FAIL
+            }
+          )
+        end
       end
     end
   end
