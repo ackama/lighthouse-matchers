@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'lighthouse/matchers/version'
+require 'tmpdir'
 
 ##
 # Defines configuration and behaviours that are shared across the entire
@@ -9,7 +10,7 @@ module Lighthouse
   module Matchers # rubocop:disable Style/Documentation
     class Error < StandardError; end
     class << self
-      attr_writer :minimum_score, :lighthouse_cli, :runner, :chrome_flags
+      attr_writer :minimum_score, :lighthouse_cli, :runner, :chrome_flags, :results_directory
       attr_accessor :remote_debugging_port
 
       def minimum_score
@@ -22,6 +23,14 @@ module Lighthouse
 
       def runner
         @runner ||= proc { |cmd| `#{cmd}` }
+      end
+
+      def results_directory
+        @results_directory ||= if defined?(Rspec)
+                                 File.join(RSpec.configuration.default_path, 'lighthouse_results')
+                               else
+                                 Dir.mktmpdir
+                               end
       end
 
       def chrome_flags

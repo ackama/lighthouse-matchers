@@ -45,13 +45,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
     it 'delegates to the audit service' do
       stub_result(response_fixture(audit, score))
-      fake_audit_service = instance_double(AuditService)
-
-      allow(AuditService).to receive(:new).and_return(fake_audit_service)
-
-      allow(fake_audit_service).to receive(:passing_score?).and_return(true)
-      allow(fake_audit_service).to receive(:measured_score).and_return(100)
-
+      allow(AuditService).to receive_message_chain(:new, :passing_score?).and_return(true)
       expect(AuditService).to receive_message_chain(:new, :passing_score?)
       expect(example_url).to pass_lighthouse_audit(audit, score: score)
     end
@@ -74,12 +68,25 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     context 'when it fails' do
       it 'raises the correct error' do
         stub_result(response_fixture(audit, score))
-        expect do
-          expect(example_url).to pass_lighthouse_audit(audit)
-        end.to raise_error <<~MESSAGE
-          expected #{example_url} to pass Lighthouse #{audit} audit
-          with a minimum score of 100, but only scored #{score}
-        MESSAGE
+
+        # because of the size of the message we assert like this to avoid the string
+        # being unhelpfully truncated in the middle by RSpec if the exception fails
+        expect { expect(example_url).to pass_lighthouse_audit(audit) }.to raise_error do |error|
+          expect(error).to be_kind_of(RSpec::Expectations::ExpectationNotMetError)
+          expect(error).to have_attributes(
+            {
+              'message' => <<~FAIL
+                expected #{example_url} to pass Lighthouse #{audit} audit
+                with a minimum score of 100, but only scored #{score.to_f}.
+
+                Full report:
+                #{Lighthouse::Matchers.results_directory}/f60a563794dfeedda6feeab0ec4a011c6bd74ff9.json
+
+                To view this report, load this file into https://googlechrome.github.io/lighthouse/viewer/
+              FAIL
+            }
+          )
+        end
       end
     end
   end
