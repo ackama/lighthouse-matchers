@@ -45,7 +45,13 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
     it 'delegates to the audit service' do
       stub_result(response_fixture(audit, score))
-      allow(AuditService).to receive_message_chain(:new, :passing_score?).and_return(true)
+      fake_audit_service = instance_double(AuditService)
+
+      allow(AuditService).to receive(:new).and_return(fake_audit_service)
+
+      allow(fake_audit_service).to receive(:passing_score?).and_return(true)
+      allow(fake_audit_service).to receive(:measured_score).and_return(100)
+
       expect(AuditService).to receive_message_chain(:new, :passing_score?)
       expect(example_url).to pass_lighthouse_audit(audit, score: score)
     end
