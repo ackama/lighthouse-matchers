@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2023-08-27
+### Changed
+- Only run audits for categories that are requested to improve performance ([#28](https://github.com/ackama/lighthouse-matchers/pull/28))
+- Include measured score in failure message ([#26](https://github.com/ackama/lighthouse-matchers/pull/26))
+
 ## [1.0.3] - 2019-08-27
 ### Added
 - **chrome_flags** option to allow the Chrome launch behaviour of the `lighthouse` command. (#8)
