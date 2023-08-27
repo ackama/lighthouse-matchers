@@ -6,21 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - 2019-05-24
+## [1.0.3] - 2019-08-27
 ### Added
-- Initial version release with minimal viable matcher
+- **chrome_flags** option to allow the Chrome launch behaviour of the `lighthouse` command. (#8)
+
+## [1.0.2] - 2019-08-16
+### Changed
+- Refactored auditing into a service object (@CaraHill)
 
 ## [1.0.1] - 2019-05-24
 ### Changed
 - Apply bug fixes based on integration with a Ruby on Rails project
 
-## [1.0.2] - 2019-08-16
-### Changed
-- Refactored auditing into a service object (@CaraHill)
--
-## [1.0.3] - 2019-08-27
+## [1.0.0] - 2019-05-24
 ### Added
-
-- **chrome_flags** option to allow the Chrome launch behaviour of the `lighthouse` command. (#8)
-
-
+- Initial version release with minimal viable matcher
