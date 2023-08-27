@@ -25,7 +25,6 @@ class AuditService
     "'#{@url}'".tap do |builder|
       builder << ' --quiet'
       builder << ' --output=json'
-      builder << " --only-categories=#{@audit}"
       builder << " --port=#{@port}" if @port
       builder << " --chrome-flags='#{@chrome_flags}'" if @chrome_flags
     end.strip

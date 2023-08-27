@@ -18,21 +18,21 @@ RSpec.describe AuditService do
   describe '#passing_score?' do
     context 'when the score matches' do
       it 'returns true' do
-        stub_command(response_fixture)
+        stub_command(response_fixture(audit, score))
         expect(subject.passing_score?).to eq true
       end
     end
 
     context 'when the score is below the threshold' do
       it 'returns false' do
-        stub_command(response_fixture(score - 1))
+        stub_command(response_fixture(audit, score - 1))
         expect(subject.passing_score?).to eq false
       end
     end
 
     context 'when the score is above the threshold' do
       it 'returns true' do
-        stub_command(response_fixture(score + 1))
+        stub_command(response_fixture(audit, score + 1))
         expect(subject.passing_score?).to eq true
       end
     end
@@ -43,11 +43,11 @@ RSpec.describe AuditService do
   def stub_command(result)
     allow(runner)
       .to receive(:call)
-      .with("lighthouse-stub 'example.com' --quiet --output=json --only-categories=#{audit}")
+      .with("lighthouse-stub 'example.com' --quiet --output=json")
       .and_return(result)
   end
 
-  def response_fixture(result_score = score)
-    JSON.generate(categories: { audit => { score: result_score / 100.0 } })
+  def response_fixture(audit, score)
+    JSON.generate(categories: { audit => { score: score / 100.0 } })
   end
 end

@@ -6,8 +6,7 @@ require 'lighthouse/audit_service'
 RSpec.describe 'pass_lighthouse_audit matcher' do
   let(:runner) { double }
   let(:example_url) { 'https://example.com' }
-  let(:expected_command) { "lighthouse-stub '#{example_url}' --quiet --output=json --only-categories=#{audit}" }
-  let(:audit) { :performance }
+  let(:expected_command) { "lighthouse-stub '#{example_url}' --quiet --output=json" }
 
   before do
     Lighthouse::Matchers.lighthouse_cli = 'lighthouse-stub'
@@ -26,12 +25,12 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     end
 
     it 'fails with a score below threshold' do
-      stub_result(response_fixture(audit, 90))
+      stub_command(expected_command, response_fixture(audit, 90))
       expect(example_url).not_to pass_lighthouse_audit(audit)
     end
 
     it 'passes with a score equal to or greater than threshold' do
-      stub_result(response_fixture(audit, 100))
+      stub_command(expected_command, response_fixture(audit, 100))
       expect(example_url).to pass_lighthouse_audit(audit)
     end
   end
@@ -41,30 +40,30 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     let(:score) { 50 }
 
     it 'delegates to the audit service' do
-      stub_result(response_fixture(audit, score))
+      stub_command(expected_command, response_fixture(audit, score))
       allow(AuditService).to receive_message_chain(:new, :passing_score?).and_return(true)
       expect(AuditService).to receive_message_chain(:new, :passing_score?)
       expect(example_url).to pass_lighthouse_audit(audit, score: score)
     end
 
     it 'fails with a score below threshold' do
-      stub_result(response_fixture(audit, score - 1))
+      stub_command(expected_command, response_fixture(audit, score - 1))
       expect(example_url).not_to pass_lighthouse_audit(audit, score: score)
     end
 
     it 'passes with a score equal to the threshold' do
-      stub_result(response_fixture(audit, score))
+      stub_command(expected_command, response_fixture(audit, score))
       expect(example_url).to pass_lighthouse_audit(audit, score: score)
     end
 
     it 'passes with a score equal to or greater than threshold' do
-      stub_result(response_fixture(audit, score + 1))
+      stub_command(expected_command, response_fixture(audit, score + 1))
       expect(example_url).to pass_lighthouse_audit(audit, score: score)
     end
 
     context 'when it fails' do
       it 'raises the correct error' do
-        stub_result(response_fixture(audit, score))
+        stub_command(expected_command, response_fixture(audit, score))
         expect do
           expect(example_url).to pass_lighthouse_audit(audit)
         end.to raise_error("expected #{example_url} to pass Lighthouse #{audit} audit\n"\
@@ -116,8 +115,8 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
   private
 
-  def stub_result(result)
-    allow(runner).to receive(:call).with(any_args).and_return(result)
+  def stub_command(cmd, result)
+    allow(runner).to receive(:call).with(cmd).and_return(result)
   end
 
   def response_fixture(audit, score = 100)
