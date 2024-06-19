@@ -6,9 +6,6 @@
   "directories": {
     "lib": "lib"
   },
-  "scripts": {
-    "test": "bin/ci-run"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ackama/lighthouse-matchers.git"
