@@ -10,6 +10,8 @@ RSpec::Matchers.define :pass_lighthouse_audit do |audit, args = {}|
 
   match do |target|
     @audit_service = AuditService.new(url(target), audit, score)
+
+    puts "saved results to #{save_audit_results}"
     @audit_service.passing_score?
   end
 

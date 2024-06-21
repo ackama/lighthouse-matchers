@@ -32,7 +32,7 @@ module Lighthouse
       end
 
       def results_directory
-        @results_directory ||= if defined?(Rspec)
+        @results_directory ||= if defined?(RSpec)
           File.join(RSpec.configuration.default_path, 'lighthouse_results')
         else
           Dir.mktmpdir
