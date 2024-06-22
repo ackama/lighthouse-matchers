@@ -23,6 +23,10 @@ class AuditService
     results.dig('categories', @audit.to_s, 'score') * 100
   end
 
+  def run_warnings
+    results.fetch("runWarnings", [])
+  end
+
   def results
     JSON.parse(output)
   end
