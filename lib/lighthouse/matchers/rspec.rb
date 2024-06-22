@@ -11,6 +11,10 @@ RSpec::Matchers.define :pass_lighthouse_audit do |audit, args = {}|
   match do |target|
     audit_service = AuditService.new(url(target), audit, score)
 
+    audit_service.run_warnings.each do |warning|
+      RSpec.configuration.reporter.message(warning)
+    end
+
     @measured_score = audit_service.measured_score
 
     audit_service.passing_score?

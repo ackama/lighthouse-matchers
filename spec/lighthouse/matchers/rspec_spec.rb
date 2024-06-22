@@ -132,6 +132,9 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
   end
 
   def response_fixture(audit, score = 100)
-    JSON.generate(categories: { audit => { score: score / 100.0 } })
+    JSON.generate(
+      categories: { audit => { score: score / 100.0 } },
+      runWarnings: []
+    )
   end
 end

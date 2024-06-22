@@ -38,6 +38,15 @@ RSpec.describe AuditService do
     end
   end
 
+  describe '#run_warnings' do
+    it 'returns the value of runWarnings from the results' do
+      stub_command(response_fixture)
+      expect(subject.run_warnings).to eq [
+        'The page may not be loading as expected because your test URL (http://127.0.0.1:35403/) was redirected to http://127.0.0.1:35403/users/sign_in. Try testing the second URL directly.' # rubocop:disable Layout/LineLength
+      ]
+    end
+  end
+
   private
 
   def stub_command(result)
@@ -48,6 +57,11 @@ RSpec.describe AuditService do
   end
 
   def response_fixture(result_score = score)
-    JSON.generate(categories: { audit => { score: result_score / 100.0 } })
+    JSON.generate(
+      categories: { audit => { score: result_score / 100.0 } },
+      runWarnings: [
+        'The page may not be loading as expected because your test URL (http://127.0.0.1:35403/) was redirected to http://127.0.0.1:35403/users/sign_in. Try testing the second URL directly.' # rubocop:disable Layout/LineLength
+      ]
+    )
   end
 end
