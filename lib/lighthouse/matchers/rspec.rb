@@ -12,7 +12,9 @@ RSpec::Matchers.define :pass_lighthouse_audit do |audit, args = {}|
     audit_service = AuditService.new(url(target), audit, score)
 
     audit_service.run_warnings.each do |warning|
-      RSpec.configuration.reporter.message(warning)
+      RSpec.configuration.reporter.message(
+        "#{RSpec.current_example.location}: #{warning}"
+      )
     end
 
     @measured_score = audit_service.measured_score
