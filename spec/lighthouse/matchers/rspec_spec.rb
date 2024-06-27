@@ -51,7 +51,9 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
       allow(fake_audit_service).to receive(:passing_score?).and_return(true)
       allow(fake_audit_service).to receive(:measured_score).and_return(100)
+      allow(fake_audit_service).to receive(:run_warnings).and_return([])
 
+      expect(AuditService).to receive_message_chain(:new, :run_warnings)
       expect(AuditService).to receive_message_chain(:new, :passing_score?)
       expect(example_url).to pass_lighthouse_audit(audit, score: score)
     end
