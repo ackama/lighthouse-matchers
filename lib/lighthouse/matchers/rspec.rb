@@ -13,7 +13,7 @@ RSpec::Matchers.define :pass_lighthouse_audit do |audit, args = {}|
 
     audit_service.run_warnings.each do |warning|
       RSpec.configuration.reporter.message(
-        "#{RSpec.current_example.location}: #{warning}"
+        "#{RSpec.current_example.location}: [lighthouse] #{warning}"
       )
     end
 
