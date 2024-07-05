@@ -121,6 +121,12 @@ for detailed instructions.
 
 This gem endeavours to follow Semantic Versioning 2.0 as defined at https://semver.org/.
 
+## Releasing
+
+Releases are done automatically by GitHub Actions when a new tag is pushed to the repository.
+
+To release a new version, create a pull request updating the "Unreleased" section of `CHANGELOG.md` file to reflect the upcoming version and expected release date, and to update the version number in `lib/lighthouse/matchers/version.rb`. Once the pull request is merged, create a new tag in the format `vX.Y.Z`, which will trigger GitHub Actions to publish the new version to RubyGems.
+
 ## License
 
 lighthouse-matchers is copyright © 2019 Ackama Group Ltd.
