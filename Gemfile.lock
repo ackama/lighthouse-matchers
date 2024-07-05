@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lighthouse-matchers (1.1.0)
+    lighthouse-matchers (1.2.0)
 
 GEM
   remote: https://rubygems.org/
