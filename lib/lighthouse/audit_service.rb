@@ -5,6 +5,8 @@ require 'stringio'
 
 # Compares a url's actual score to the expected score.
 class AuditService
+  class Error < StandardError; end
+
   def initialize(url, audit, score)
     @url = url
     @audit = audit
@@ -20,7 +22,7 @@ class AuditService
   end
 
   def measured_score
-    results.dig('categories', @audit.to_s, 'score') * 100
+    category['score'] * 100
   end
 
   def run_warnings
@@ -28,6 +30,16 @@ class AuditService
   end
 
   private
+
+  def category
+    category = results.dig('categories', @audit.to_s)
+
+    if category.nil?
+      raise Error, "Category '#{@audit}' not found in Lighthouse results - maybe it was removed?"
+    end
+
+    category
+  end
 
   def opts
     "'#{@url}'".tap do |builder|

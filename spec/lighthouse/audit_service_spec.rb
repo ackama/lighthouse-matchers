@@ -36,6 +36,35 @@ RSpec.describe AuditService do
         expect(subject.passing_score?).to eq true
       end
     end
+
+    context 'when the category is not found' do
+      it 'raises an error' do
+        stub_command(JSON.generate(categories: {}))
+        expect { subject.measured_score }.to raise_error(
+          AuditService::Error,
+          "Category '#{audit}' not found in Lighthouse results - maybe it was removed?"
+        )
+      end
+    end
+  end
+
+  describe '#measured_score' do
+    context 'when the category does exist' do
+      it 'returns the score as a percentage' do
+        stub_command(response_fixture)
+        expect(subject.measured_score).to eq score
+      end
+    end
+
+    context 'when the category is not found' do
+      it 'raises an error' do
+        stub_command(JSON.generate(categories: {}))
+        expect { subject.measured_score }.to raise_error(
+          AuditService::Error,
+          "Category '#{audit}' not found in Lighthouse results - maybe it was removed?"
+        )
+      end
+    end
   end
 
   describe '#run_warnings' do
