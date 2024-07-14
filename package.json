@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/ackama/lighthouse-matchers#readme",
   "dependencies": {
-    "lighthouse": "^9.6.7"
+    "lighthouse": "^12.1.0"
   }
 }
