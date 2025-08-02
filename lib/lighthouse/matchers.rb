@@ -9,7 +9,7 @@ module Lighthouse
   module Matchers # rubocop:disable Style/Documentation
     class Error < StandardError; end
     class << self
-      attr_writer :minimum_score, :lighthouse_cli, :runner, :chrome_flags
+      attr_writer :minimum_score, :lighthouse_cli, :runner, :chrome_flags, :results_directory
       attr_accessor :remote_debugging_port
 
       def minimum_score
@@ -29,6 +29,14 @@ module Lighthouse
         return @chrome_flags unless @chrome_flags.is_a?(Array)
 
         @chrome_flags.map { |f| "--#{f}" }.join(' ')
+      end
+
+      def results_directory
+        @results_directory ||= if defined?(RSpec)
+                                 File.join(RSpec.configuration.default_path, 'lighthouse')
+                               else
+                                 Dir.mktmpdir('lighthouse-matchers-')
+                               end
       end
 
       private

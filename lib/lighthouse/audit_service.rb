@@ -29,6 +29,10 @@ class AuditService
     results['runWarnings']
   end
 
+  def results
+    @results ||= JSON.parse(output)
+  end
+
   private
 
   def category
@@ -53,9 +57,5 @@ class AuditService
 
   def output
     @output ||= @runner.call("#{@cmd} #{opts}")
-  end
-
-  def results
-    @results ||= JSON.parse(output)
   end
 end
