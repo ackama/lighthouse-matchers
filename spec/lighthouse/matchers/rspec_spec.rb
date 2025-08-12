@@ -2,6 +2,7 @@
 
 require 'lighthouse/matchers/rspec'
 require 'lighthouse/audit_service'
+require 'tmpdir'
 
 RSpec.describe 'pass_lighthouse_audit matcher' do
   let(:runner) { double }
@@ -12,9 +13,19 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
   let(:audit) { :performance }
 
-  before do
+  around do |example|
     Lighthouse::Matchers.lighthouse_cli = 'lighthouse-stub'
     Lighthouse::Matchers.runner = runner
+
+    old = Lighthouse::Matchers.results_directory
+
+    Dir.mktmpdir('lighthouse-matchers-') do |tmpdir|
+      Lighthouse::Matchers.results_directory = tmpdir
+
+      example.run
+    end
+
+    Lighthouse::Matchers.results_directory = old
   end
 
   context 'with single audit and default score' do
@@ -74,14 +85,31 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     end
 
     context 'when it fails' do
+      let(:results_file) do
+        "#{Lighthouse::Matchers.results_directory}/83e1e62d68a73fedcfaf5c486e3afd5b7a94d559.json"
+      end
+
       it 'raises the correct error' do
         stub_result(response_fixture(audit, score))
+
         expect do
           expect(example_url).to pass_lighthouse_audit(audit)
         end.to raise_error <<~MESSAGE
           expected #{example_url} to pass Lighthouse #{audit} audit
           with a minimum score of 100, but only scored #{score}
+
+          Full report:
+           #{results_file}
+
+           To view this report, load this file into https://googlechrome.github.io/lighthouse/viewer/
         MESSAGE
+      end
+
+      it 'writes the results to disk' do
+        stub_result(response_fixture(audit, score))
+
+        expect { expect(example_url).to pass_lighthouse_audit(audit) }.to raise_error
+        expect { JSON.parse(File.read(results_file)) }.not_to raise_error
       end
     end
   end
