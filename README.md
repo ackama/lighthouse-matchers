@@ -102,6 +102,12 @@ All configuration keys are accessible against the `Lighthouse::Matchers` object.
   for the CLI. This setting can be used if the Lighthouse tool is installed in a non-standard location.
 * **`minimum_score`:** The default minimum score that audits must meet for the matcher to pass.
   The default value of this configuration setting is '100' - e.g. audits must fully comply to pass.
+* **`preset`:** The built-in configuration that will be used by Lighthouse CLI if defined
+  Options: "perf", "experimental", "desktop"
+* **`form-factor`:** This value changes how performance metrics are measured and whether mobile only checks are performed
+  If you are intending to run lighthouse to only test the desktop version of your site, it is recommended that you use preset instead.
+  Leave empty if you are testing your website for both desktop and mobile.
+  Options: "desktop", "mobile"
 * **`chrome_flags`:** Any additional flags that should be passed to Chrome when Lighthouse launches a browser instance. As an example, running Lighthouse in Docker requires the normal headless Chrome flags (`--headless`, `--no-sandbox`) for Chrome to successfully start. Chrome flags can either be specified as an array (`["headless", "no-sandbox"]`) or as a string (`--headless --no-sandbox`).
 * **`results_directory`:** Directory to write lighthouse results on failure
   * Defaults to `<RSpec.configuration.default_path>/lighthouse` if `RSpec` is defined, otherwise a temporary directory prefixed with `lighthouse-matchers-`
