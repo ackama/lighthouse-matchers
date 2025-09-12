@@ -164,7 +164,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     end
 
     context 'when the preset is desktop' do
-      let(:preset) { "desktop" }
+      let(:preset) { 'desktop' }
 
       it 'executes the expected command' do
         command = "#{expected_command} --preset=desktop"
@@ -184,7 +184,7 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
     end
 
     context 'when the form factor is desktop' do
-      let(:form_factor) { "desktop" }
+      let(:form_factor) { 'desktop' }
 
       it 'executes the expected command' do
         command = "#{expected_command} --form-factor=desktop"
