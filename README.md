@@ -104,7 +104,7 @@ All configuration keys are accessible against the `Lighthouse::Matchers` object.
   The default value of this configuration setting is '100' - e.g. audits must fully comply to pass.
 * **`preset`:** The built-in configuration that will be used by Lighthouse CLI if defined
   Options: "perf", "experimental", "desktop"
-* **`form-factor`:** This value changes how performance metrics are measured and whether mobile only checks are performed
+* **`form_factor`:** This value changes how performance metrics are measured and whether mobile only checks are performed
   If you are intending to run lighthouse to only test the desktop version of your site, it is recommended that you use preset instead.
   Leave empty if you are testing your website for both desktop and mobile.
   Options: "desktop", "mobile"

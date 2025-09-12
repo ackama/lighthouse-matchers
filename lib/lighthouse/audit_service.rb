@@ -54,8 +54,8 @@ class AuditService
       builder << " --only-categories=#{@audit}"
       builder << " --port=#{@port}" if @port
       builder << " --chrome-flags='#{@chrome_flags}'" if @chrome_flags
-      builder << " --preset=#{@preset}" if @preset
-      builder << " --form-factor=#{@form_factor}" if @form_factor
+      builder << " --preset=#{@preset}" if @preset.present?
+      builder << " --form-factor=#{@form_factor}" if @form_factor.present?
     end.strip
   end
 
