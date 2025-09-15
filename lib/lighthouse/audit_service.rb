@@ -15,6 +15,8 @@ class AuditService
     @runner = Lighthouse::Matchers.runner
     @cmd = Lighthouse::Matchers.lighthouse_cli
     @chrome_flags = Lighthouse::Matchers.chrome_flags
+    @preset = Lighthouse::Matchers.preset
+    @form_factor = Lighthouse::Matchers.form_factor
   end
 
   def passing_score?
@@ -52,6 +54,8 @@ class AuditService
       builder << " --only-categories=#{@audit}"
       builder << " --port=#{@port}" if @port
       builder << " --chrome-flags='#{@chrome_flags}'" if @chrome_flags
+      builder << " --preset=#{@preset}" if @preset
+      builder << " --form-factor=#{@form_factor}" if @form_factor
     end.strip
   end
 

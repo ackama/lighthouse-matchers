@@ -10,7 +10,7 @@ module Lighthouse
     class Error < StandardError; end
     class << self
       attr_writer :minimum_score, :lighthouse_cli, :runner, :chrome_flags, :results_directory
-      attr_accessor :remote_debugging_port
+      attr_accessor :remote_debugging_port, :preset, :form_factor
 
       def minimum_score
         @minimum_score ||= default_minimum_score

@@ -14,6 +14,9 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
   let(:audit) { :performance }
 
   around do |example|
+    Lighthouse::Matchers.preset = nil
+    Lighthouse::Matchers.form_factor = nil
+    Lighthouse::Matchers.chrome_flags = nil
     Lighthouse::Matchers.lighthouse_cli = 'lighthouse-stub'
     Lighthouse::Matchers.runner = runner
 
@@ -145,6 +148,46 @@ RSpec.describe 'pass_lighthouse_audit matcher' do
 
       it 'executes the expected command' do
         command = "#{expected_command} --chrome-flags='--headless --no-sandbox'"
+
+        expect(runner).to receive(:call)
+          .with(command)
+          .and_return(response_fixture(:performance))
+
+        expect(example_url).to pass_lighthouse_audit(:performance)
+      end
+    end
+  end
+
+  context 'with preset specified' do
+    before do
+      Lighthouse::Matchers.preset = preset
+    end
+
+    context 'when the preset is desktop' do
+      let(:preset) { 'desktop' }
+
+      it 'executes the expected command' do
+        command = "#{expected_command} --preset=desktop"
+
+        expect(runner).to receive(:call)
+          .with(command)
+          .and_return(response_fixture(:performance))
+
+        expect(example_url).to pass_lighthouse_audit(:performance)
+      end
+    end
+  end
+
+  context 'with form factor specified' do
+    before do
+      Lighthouse::Matchers.form_factor = form_factor
+    end
+
+    context 'when the form factor is desktop' do
+      let(:form_factor) { 'desktop' }
+
+      it 'executes the expected command' do
+        command = "#{expected_command} --form-factor=desktop"
 
         expect(runner).to receive(:call)
           .with(command)
