@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2025-09-17
 ### Added
 - Added config options for "preset" and "form-factor" so those parameters can be passed to the `lighthouse` command ([#71](https://github.com/ackama/lighthouse-matchers/pull/71))
 
